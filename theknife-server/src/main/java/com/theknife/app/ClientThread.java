@@ -8,13 +8,13 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class ClientThread extends Thread {
-    Socket socket;
-    String ip;
-    BufferedReader reader;
-    OutputStream os;
+    private String ip;
+    private BufferedReader reader;
+    private OutputStream os;
+    private DBHandler db;
 
-    public ClientThread(Socket socket) throws IOException {
-        this.socket = socket;
+    public ClientThread(Socket socket, DBHandler db) throws IOException {
+        this.db = db;
         ip = socket.getInetAddress().toString();
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream(),  StandardCharsets.UTF_8));
         os = socket.getOutputStream();
