@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theknife.app.controllers.LoginController">
+   <children>
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="Indietro" />
+      <Label layoutX="246.0" layoutY="150.0" text="Username" AnchorPane.rightAnchor="300.0" />
+      <Label layoutX="248.0" layoutY="185.0" text="Password" AnchorPane.rightAnchor="302.0" />
+      <TextField fx:id="username" layoutX="310.0" layoutY="146.0" />
+      <PasswordField fx:id="password" layoutX="310.0" layoutY="181.0" />
+      <Button layoutX="277.0" layoutY="222.0" mnemonicParsing="false" onAction="#login" text="Login" />
+      <Label fx:id="notification_label" layoutX="26.0" layoutY="350.0" style="-fx-text-fill: red;" text="empty" visible="false" />
+   </children>
+</AnchorPane>

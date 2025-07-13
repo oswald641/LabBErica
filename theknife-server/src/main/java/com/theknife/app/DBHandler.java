@@ -105,4 +105,25 @@ public class DBHandler {
         //the username was not found in the database
         return null;
     }
+
+    public static String[] getUserInfo(int id) throws SQLException {
+        String sql = "SELECT nome, cognome, is_ristoratore FROM utenti WHERE id = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, id);;
+
+        ResultSet result = statement.executeQuery();
+
+        if(result.next()) {
+            String name = result.getString("nome");
+            String surname = result.getString("cognome");
+            boolean is_restaurateur = result.getBoolean("is_ristoratore");
+
+            return new String[]{name, surname, is_restaurateur ? "y" :"n"};
+        }
+
+        //the user was not found in the database
+        return null;
+    }
 }

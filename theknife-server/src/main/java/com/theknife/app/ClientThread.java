@@ -78,6 +78,15 @@ public class ClientThread extends Thread {
                     else if(logged_user_id == -2) //password mismatch
                         sendStream("password");
                     break;
+                case "getUserInfo":
+                    if(user_id < 1)
+                        sendStream("unauthorized");
+                    else {
+                        String[] user_info = DBHandler.getUserInfo(user_id);
+                        sendStream(user_info[0]);
+                        sendStream(user_info[1]);
+                        sendStream(user_info[2]);
+                    }
                 default:
                     sendStream("Unknown command");
                     break;
