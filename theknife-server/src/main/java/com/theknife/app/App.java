@@ -34,8 +34,7 @@ public class App {
             password = line;
 
         //initializes db handler object
-        final DBHandler db = new DBHandler();
-        if(!db.connect(jdbcUrl, username, password)) {
+        if(!DBHandler.connect(jdbcUrl, username, password)) {
             System.out.println("Error in the connection with the database, press enter to exit");
             myScanner.nextLine();
             myScanner.close();
@@ -43,7 +42,7 @@ public class App {
         }
 
         //initializes the db and handles response code
-        switch(db.initDB()) {
+        switch(DBHandler.initDB()) {
             case 0:
                 System.out.println("Database initialized successfully");
                 break;
@@ -70,7 +69,7 @@ public class App {
 
         //listens for clients to connect
         while(serve)
-            new ClientThread(serverSocket.accept(), db);
+            new ClientThread(serverSocket.accept());
         
         serverSocket.close();
     }

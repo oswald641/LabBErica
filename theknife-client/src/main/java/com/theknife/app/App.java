@@ -16,9 +16,6 @@ public class App extends Application {
             stage.show();
 
             Communicator comm = new Communicator("127.0.0.1", 12345);
-            comm.sendStream("ping");
-            String received = comm.readStream();
-            System.out.println(received);
         } catch(Exception e) {
             e.printStackTrace();
         }

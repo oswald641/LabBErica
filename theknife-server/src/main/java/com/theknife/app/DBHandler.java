@@ -5,13 +5,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DBHandler {
-    private Connection connection = null;
+    private static Connection connection = null;
 
-    public boolean connect(String jdbcUrl, String username, String password) {
+    public static boolean connect(String jdbcUrl, String username, String password) {
         try {
             Class.forName("org.postgresql.Driver");
 
@@ -28,11 +31,11 @@ public class DBHandler {
         }
     }
 
-    public int initDB() throws SQLException, IOException {
+    public static int initDB() throws SQLException, IOException {
         //checks if the db is initialized
         boolean initialized = true;
         try {
-            connection.createStatement().execute("SELECT 1 FROM users");
+            connection.createStatement().execute("SELECT 1 FROM utenti");
         } catch (SQLException e) {
             initialized = false;
         }
@@ -41,7 +44,7 @@ public class DBHandler {
             return 2;
 
         //loads the sql file
-        InputStream is = getClass().getResourceAsStream("/init-db.sql");
+        InputStream is = DBHandler.class.getResourceAsStream("/init-db.sql");
         
         if(is == null) {
             System.err.println("Sql file \"init-db.sql\" not found");
@@ -53,5 +56,53 @@ public class DBHandler {
         //creates the tables
         connection.createStatement().execute(statement);
         return 0;
+    }
+
+    public static boolean addUser(String nome, String cognome, String username, String hash, long data_nascita_time, boolean is_ristoratore) throws SQLException {
+        //checks if birth date is present
+        String sql = data_nascita_time < 0 ?
+            "INSERT INTO utenti(nome, cognome, username, password, is_ristoratore) VALUES (?, ?, ?, ?, ?)" :
+            "INSERT INTO utenti(nome, cognome, username, password, is_ristoratore, data_nascita) VALUES (?, ?, ?, ?, ?, ?)";
+        
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setString(1, nome);
+        statement.setString(2, cognome);
+        statement.setString(3, username);
+        statement.setString(4, hash);
+        statement.setBoolean(5, is_ristoratore);
+
+        if(data_nascita_time >= 0)
+            statement.setDate(6, new Date(data_nascita_time));
+        
+        try {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            //username is already in use
+            return false;
+        }
+
+        //returns true if the insertion was succesfull
+        return true;
+    }
+
+    public static String[] getUserLoginInfo(String username) throws SQLException {
+        String sql = "SELECT id, password FROM utenti WHERE username = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setString(1, username);
+
+        ResultSet result = statement.executeQuery();
+
+        if(result.next()) {
+            int id = result.getInt("id");
+            String password = result.getString("password");
+
+            return new String[]{Integer.toString(id), password};
+        }
+
+        //the username was not found in the database
+        return null;
     }
 }
