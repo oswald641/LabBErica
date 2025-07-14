@@ -2,7 +2,6 @@ package com.theknife.app.controllers;
 
 import java.io.IOException;
 
-import com.theknife.app.Communicator;
 import com.theknife.app.SceneManager;
 import com.theknife.app.User;
 
@@ -26,18 +25,8 @@ public class LoginController {
 
     @FXML
     private void login() throws IOException {
-        //ok, username, password
-        Communicator.sendStream("login");
-        Communicator.sendStream(username.getText());
-        Communicator.sendStream(password.getText());
-
-        switch(Communicator.readStream()) {
+        switch(User.login(username.getText(), password.getText())) {
             case "ok":
-                Communicator.sendStream("getUserInfo");
-                String name = Communicator.readStream();
-                String surname = Communicator.readStream();
-                boolean is_restaurateur = Communicator.readStream().equals("y");
-                User.login(name, surname, is_restaurateur);
                 SceneManager.setAppAlert("Login effettuato con successo");
                 SceneManager.changeScene("App");
                 break;
