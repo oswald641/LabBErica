@@ -27,6 +27,11 @@ public class LoginController {
     private void login() throws IOException {
         switch(User.login(username.getText(), password.getText())) {
             case "ok":
+                //if the user is a restaurateur, changes the scene to MyRestaurants
+                if(User.getInfo()[2].equals("y")) {
+                    SceneManager.changeScene("MyRestaurants");
+                    break;
+                }
                 SceneManager.setAppAlert("Login effettuato con successo");
                 SceneManager.changeScene("App");
                 break;

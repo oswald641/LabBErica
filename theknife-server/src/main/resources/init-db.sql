@@ -17,7 +17,7 @@ CREATE TABLE "RistorantiTheKnife" (
     indirizzo VARCHAR(100) NOT NULL,
     latitudine DOUBLE PRECISION NOT NULL,
     longitudine DOUBLE PRECISION NOT NULL,
-    fascia_presso INTEGER NOT NULL,
+    fascia_prezzo INTEGER NOT NULL,
     servizio_delivery BOOLEAN NOT NULL,
     prenotazione_online BOOLEAN NOT NULL,
     --tipo_cucina,
