@@ -214,7 +214,19 @@ public class DBHandler {
             String has_delivery = result.getBoolean("servizio_delivery") ? "y" : "n";
             String has_online = result.getBoolean("prenotazione_online") ? "y" : "n";
 
-            return new String[]{name, nation, city, address, latitude, longitude, avg_price, has_delivery, has_online};
+            //getting average stars and number of reviews
+            sql = "SELECT ROUND(AVG(stelle), 1) AS stars_avg, COUNT(*) AS n_reviews from recensioni WHERE id_ristorante = ? GROUP BY id_ristorante";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            result = statement.executeQuery();
+            
+            String avg_stars = "0", n_reviews = "0";
+            if(result.next()) {
+                avg_stars = result.getString("stars_avg");
+                n_reviews = result.getString("n_reviews");
+            }
+
+            return new String[]{name, nation, city, address, latitude, longitude, avg_price, has_delivery, has_online, avg_stars, n_reviews};
         }
 
         return null;

@@ -13,5 +13,8 @@
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" text="Log out" />
       <Button fx:id="edit_btn" disable="true" layoutX="175.0" layoutY="320.0" mnemonicParsing="false" onAction="#editSelected" text="Modifica" />
       <Button fx:id="reviews_btn" disable="true" layoutX="248.0" layoutY="320.0" mnemonicParsing="false" onAction="#viewReviews" text="Visualizza recensioni" />
+      <Button fx:id="prev_btn" layoutX="380.0" layoutY="320.0" mnemonicParsing="false" onAction="#prevPage" text="←" />
+      <Button fx:id="next_btn" layoutX="407.0" layoutY="320.0" mnemonicParsing="false" onAction="#nextPage" text="→" />
+      <Label fx:id="page_label" layoutX="434.0" layoutY="324.0" text="-/-" />
    </children>
 </AnchorPane>
