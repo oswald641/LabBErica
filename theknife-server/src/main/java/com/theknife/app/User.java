@@ -3,6 +3,7 @@ package com.theknife.app;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -62,6 +63,10 @@ public class User {
         } catch(ParseException e) {
             return "date";
         }
+
+        //is the birth date is after today, returns the "date" error
+        if(time > new java.util.Date().getTime())
+            return "date";
 
         return DBHandler.addUser(nome, cognome, username, hashPassword(password), time, is_ristoratore) ? "ok" : "username";
     }
