@@ -37,6 +37,11 @@ public class AppController {
     }
 
     @FXML
+    private void click_view_restaurants() throws IOException {
+        SceneManager.changeScene("ViewRestaurants");
+    }
+
+    @FXML
     private void click_register() throws IOException {
         SceneManager.changeScene("Register");
     }

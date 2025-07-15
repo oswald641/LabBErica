@@ -247,6 +247,41 @@ public class ClientThread extends Thread {
                     else for(String info : restaurant_info)
                         sendStream(info);
                     break;
+                case "getRestaurants":
+                    //if the user is a restaurator, he cannot get all the restaurants
+                    if(user_id > 0 && DBHandler.getUserInfo(user_id)[2].equals("y")) {
+                        sendStream("unauthorized");
+                        break;
+                    }
+                    page = Integer.parseInt(readStream());
+                    latitude_string = readStream();
+                    longitude_string = readStream();
+                    String range_km = readStream();
+                    String price_min = readStream();
+                    String price_max = readStream();
+                    has_delivery = readStream().equals("y");
+                    has_online = readStream().equals("y");
+                    String stars_min = readStream();
+                    String stars_max = readStream();
+
+                    boolean favourites = false;
+                    if(user_id > 0)
+                        favourites = readStream().equals("y");
+                    
+                    String[][] restaurants = Restaurant.getRestaurantsWithFilter(page, latitude_string, longitude_string, range_km, price_min, price_max, has_delivery, has_online, stars_min, stars_max, favourites ? user_id : -1);
+
+                    if(restaurants[0][0].equals("error")) {
+                        sendStream(restaurants[0][1]);
+                        break;
+                    }
+
+                    sendStream("ok");
+
+                    for(String[] restaurant : restaurants) {
+                        sendStream(restaurant[0]);
+                        sendStream(restaurant[1]);
+                    }
+                    break;
                 case "logout":
                     user_id = -1;
                     sendStream("ok");
