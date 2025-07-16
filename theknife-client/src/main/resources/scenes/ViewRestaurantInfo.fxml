@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.theknife.app.controllers.ViewRestaurantInfo">
    <children>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="Indietro" />
@@ -28,5 +27,7 @@
       <Label layoutX="29.0" layoutY="275.0" text="Servizi disponibili" underline="true" />
       <Label fx:id="services_label" layoutX="35.0" layoutY="292.0" text="services" />
       <Label fx:id="nation_label" layoutX="35.0" layoutY="117.0" text="nation" />
+      <Button layoutX="26.0" layoutY="320.0" mnemonicParsing="false" onAction="#viewReviews" text="Vedi recensioni" />
+      <Button fx:id="fav_btn" layoutX="133.0" layoutY="320.0" mnemonicParsing="false" onAction="#addToFavourites" text="Aggiungi ai preferiti" />
    </children>
 </AnchorPane>

@@ -282,6 +282,39 @@ public class ClientThread extends Thread {
                         sendStream(restaurant[1]);
                     }
                     break;
+                case "addFavourite":
+                    //if the user isn't a customer, he cannot add favourites
+                    if(user_id < 1 || DBHandler.getUserInfo(user_id)[2].equals("y")) {
+                        sendStream("unauthorized");
+                        break;
+                    }
+
+                    id = Integer.parseInt(readStream());
+                    sendStream(DBHandler.setFavourite(user_id, id, true) ? "ok" : "error");
+
+                    break;
+                case "removeFavourite":
+                    //if the user isn't a customer, he cannot remove favourites
+                    if(user_id < 1 || DBHandler.getUserInfo(user_id)[2].equals("y")) {
+                        sendStream("unauthorized");
+                        break;
+                    }
+
+                    id = Integer.parseInt(readStream());
+                    sendStream(DBHandler.setFavourite(user_id, id, false) ? "ok" : "error");
+
+                    break;
+                case "isFavourite":
+                    //if the user isn't a customer, he look out if a restaurant is in his favourites
+                    if(user_id < 1 || DBHandler.getUserInfo(user_id)[2].equals("y")) {
+                        sendStream("unauthorized");
+                        break;
+                    }
+
+                    id = Integer.parseInt(readStream());
+                    sendStream(DBHandler.isFavourite(user_id, id) ? "y" : "n");
+
+                    break;
                 case "logout":
                     user_id = -1;
                     sendStream("ok");

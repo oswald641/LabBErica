@@ -397,4 +397,36 @@ public class DBHandler {
         
         return restaurants.toArray(new String[][]{});
     }
+
+    public static boolean setFavourite(int user_id, int id_restaurant, boolean set_favourite) throws SQLException {
+        //adds or removes the favourite based on the passed parameter value
+        String sql = set_favourite ? "INSERT INTO preferiti(id_utente, id_ristorante) VALUES(?, ?)" : "DELETE FROM preferiti WHERE id_utente = ? AND id_ristorante = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, user_id);
+        statement.setInt(2, id_restaurant);
+
+        try {
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            //if the user adds/removes a favourite he cannot add/remove
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean isFavourite(int user_id, int id_restaurant) throws SQLException {
+        String sql = "SELECT 1 FROM preferiti WHERE id_utente = ? AND id_ristorante = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, user_id);
+        statement.setInt(2, id_restaurant);
+
+        ResultSet result = statement.executeQuery();
+
+        return result.next();
+    }
 }
