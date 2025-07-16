@@ -60,9 +60,8 @@ public class ViewRestaurantInfo {
     }
 
     @FXML
-    private void viewReviews() {
-        int restaurant_id = EditingRestaurant.getId();
-        System.out.println("review this: " + restaurant_id);
+    private void viewReviews() throws IOException {
+        SceneManager.changeScene("RestaurantReviews");
     }
 
     @FXML
