@@ -30,6 +30,11 @@ public class User {
             logged_in = false;
     }
 
+    //handles user logout when a connection error occurs
+    public static void panic() {
+        logged_in = false;
+    }
+
     public static String[] getInfo() {
         if(!logged_in)
             return null;

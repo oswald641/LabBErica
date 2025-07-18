@@ -7,9 +7,9 @@ import javafx.stage.Stage;
 public class App extends Application {
     public void start(Stage stage) {
         try {
-            SceneManager.init(stage);
-
             Communicator.init("127.0.0.1", 12345);
+            
+            SceneManager.init(stage);
         } catch(Exception e) {
             e.printStackTrace();
         }
