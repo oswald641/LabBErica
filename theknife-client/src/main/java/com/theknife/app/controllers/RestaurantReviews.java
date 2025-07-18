@@ -128,7 +128,16 @@ public class RestaurantReviews {
 
     @FXML
     private void addReview() throws IOException {
+        if(is_restaurateur) {
+            int review_id = Integer.parseInt(reviews_ids[reviews_listview.getSelectionModel().getSelectedIndex()]);
+            EditingRestaurant.setReviewId(review_id);
+        }
         SceneManager.changeScene("WriteReview");
+    }
+
+    @FXML
+    private void checkSelected() {
+        add_review_btn.setDisable(reviews_listview.getSelectionModel().getSelectedIndex() < 0);
     }
 
     @FXML

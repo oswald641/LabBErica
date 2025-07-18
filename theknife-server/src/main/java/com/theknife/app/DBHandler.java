@@ -546,4 +546,85 @@ public class DBHandler {
 
         return reviews.toArray(new String[][]{});
     }
+
+    public static boolean canRespond(int user_id, int review_id) throws SQLException {
+        String sql = "SELECT 1 FROM recensioni re JOIN \"RistorantiTheKnife\" ri ON id_ristorante = ri.id WHERE re.id = ? AND proprietario = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, review_id);
+        statement.setInt(2, user_id);
+
+        ResultSet result = statement.executeQuery();
+
+        return result.next();
+    }
+
+    public static boolean addResponse(int review_id, String text) throws SQLException {
+        String sql = "INSERT INTO risposte(id_recensione, testo) VALUES(?, ?)";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, review_id);
+        statement.setString(2, text);
+
+        try {
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            //shouldn't happen
+            return false;
+        }
+
+        return true;
+    }
+
+    public static String getResponse(int review_id) throws SQLException {
+        String sql = "SELECT testo FROM risposte WHERE id_recensione = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, review_id);
+
+        ResultSet result = statement.executeQuery();
+
+        if(result.next())
+            return result.getString("testo");
+        
+        return null;
+    }
+
+    public static boolean editResponse(int review_id, String text) throws SQLException {
+        String sql = "UPDATE risposte SET testo = ? WHERE id_recensione = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setString(1, text);
+        statement.setInt(2, review_id);
+
+        try {
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            //shouldn't happen
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean removeResponse(int review_id) throws SQLException {
+        String sql = "DELETE FROM risposte WHERE id_recensione = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, review_id);
+
+        try {
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            //shouldn't happen
+            return false;
+        }
+
+        return true;
+    }
 }

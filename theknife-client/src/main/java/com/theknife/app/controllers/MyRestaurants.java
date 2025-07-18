@@ -27,6 +27,8 @@ public class MyRestaurants {
     @FXML
     private void initialize() throws IOException {
         EditingRestaurant.reset();
+        prev_btn.setDisable(true);
+        next_btn.setDisable(true);
         Communicator.sendStream("getMyRestaurantsPages");
         total_pages = Integer.parseInt(Communicator.readStream());
         if(total_pages > 0)
@@ -81,9 +83,10 @@ public class MyRestaurants {
     }
 
     @FXML
-    private void viewReviews() {
+    private void viewReviews() throws IOException {
         int restaurant_id = restaurants_ids[restaurants_container.getSelectionModel().getSelectedIndex()];
-        System.out.println("View reviews with this id: " + restaurant_id);
+        EditingRestaurant.setEditing(restaurant_id);
+        SceneManager.changeScene("RestaurantReviews");
     }
 
     @FXML
