@@ -52,7 +52,7 @@ public class App {
                 myScanner.close();
                 return;
             case 2:
-                System.out.println("Database alrready initialized");
+                System.out.println("Database already initialized");
                 break;
             default:
                 System.err.println("Unhandled database initialization result, press enter to exit");
