@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class App {
-    private static final int PORT = 12345;
+    private static int port = 12345;
     private static boolean serve = true;
     public static void main(String[] args) throws IOException, SQLException {
         String jdbcUrl = "jdbc:postgresql://localhost:5432/theknife";
@@ -32,6 +32,13 @@ public class App {
         line = myScanner.nextLine().trim();
         if(!line.isEmpty())
             password = line;
+        
+        System.out.print("server port: ");
+        line = myScanner.nextLine().trim();
+        if(!line.isEmpty())
+            try {
+                port = Integer.parseInt(line);
+            } catch(NumberFormatException e) {}
 
         //initializes db handler object
         if(!DBHandler.connect(jdbcUrl, username, password)) {
@@ -64,8 +71,8 @@ public class App {
         myScanner.close();
 
         //initializes server socket
-        final ServerSocket serverSocket = new ServerSocket(PORT);
-        System.out.println("Server listening on port " + PORT);
+        final ServerSocket serverSocket = new ServerSocket(port);
+        System.out.println("Server listening on port " + port);
 
         //listens for clients to connect
         while(serve)
