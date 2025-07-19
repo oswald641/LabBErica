@@ -73,7 +73,7 @@ public class ViewRestaurants {
         if(category_field.getText().isEmpty())
             category = null;
         else
-            category = filledOrDash(category_field.getText());
+            category = category_field.getText();
         near_me = near_me_check.isSelected() ? "y" : "n";
         searchPage(0);
     }

@@ -477,6 +477,44 @@ public class ClientThread extends Thread {
 
                     sendStream(DBHandler.removeResponse(id) ? "ok" : "error");
                     break;
+                case "getMyReviewsPages":
+                    //if the user isn't a customer, he cannot get his reviews
+                    if(user_id < 1 || DBHandler.getUserInfo(user_id)[2].equals("y")) {
+                        sendStream("unauthorized");
+                        break;
+                    }
+
+                    int num_pages = DBHandler.getUserReviewsPages(user_id);
+
+                    if(num_pages < 0)
+                        sendStream("error");
+                    else {
+                        sendStream("ok");
+                        sendStream(Integer.toString(num_pages));
+                    }
+
+                    break;
+                case "getMyReviews":
+                    //if the user isn't a customer, he cannot get his reviews
+                    if(user_id < 1 || DBHandler.getUserInfo(user_id)[2].equals("y")) {
+                        sendStream("unauthorized");
+                        break;
+                    }
+
+                    page = Integer.parseInt(readStream());
+
+                    //review_format: {"restaurant name", "given stars", "review text"}
+                    String[][] my_reviews = DBHandler.getUserReviews(user_id, page);
+
+                    sendStream(Integer.toString(my_reviews.length));
+
+                    for(String[] review : my_reviews) {
+                        sendStream(review[0]);
+                        sendStream(review[1]);
+                        sendStream(review[2]);
+                    }
+
+                    break;
                 case "logout":
                     user_id = -1;
                     sendStream("ok");

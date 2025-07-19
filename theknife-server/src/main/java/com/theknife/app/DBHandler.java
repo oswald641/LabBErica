@@ -657,4 +657,45 @@ public class DBHandler {
 
         return true;
     }
+
+    public static int getUserReviewsPages(int user_id) throws SQLException {
+        String sql = "SELECT COUNT(*) AS num FROM recensioni WHERE id_utente = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, user_id);
+
+        ResultSet result = statement.executeQuery();
+
+        if(result.next()) {
+            int num_pages = result.getInt("num");
+            return num_pages > 0 ? (num_pages - 1) / 10 + 1 : 0;
+        }
+
+        //shouldn't reach this part of the code
+        return -1;
+    }
+
+    public static String[][] getUserReviews(int user_id, int page) throws SQLException {
+        int offset = page * 10;
+        String sql = "SELECT nome, stelle, testo FROM \"RistorantiTheKnife\" ri JOIN recensioni re ON ri.id = id_ristorante WHERE id_utente = ? LIMIT 10 OFFSET ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, user_id);
+        statement.setInt(2, offset);
+
+        ResultSet result = statement.executeQuery();
+
+        List<String[]> reviews = new LinkedList<String[]>();
+
+        while(result.next()) {
+            String restaurant_name = result.getString("nome");
+            String stars = result.getString("stelle");
+            String text = result.getString("testo");
+            reviews.add(new String[]{restaurant_name, stars, text});
+        }
+
+        return reviews.toArray(new String[][]{});
+    }
 }
