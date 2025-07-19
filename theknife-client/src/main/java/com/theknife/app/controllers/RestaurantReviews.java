@@ -18,7 +18,7 @@ public class RestaurantReviews {
     private static String[] reviews_ids;
     private static int total_pages, current_page;
     @FXML
-    private Label no_reviews_label, page_label;
+    private Label no_reviews_label, page_label, reviews_label, stars_label;
     @FXML
     private Button prev_btn, next_btn, add_review_btn;
     @FXML
@@ -53,6 +53,11 @@ public class RestaurantReviews {
                     add_review_btn.setText("Modifica recensione");
             }
         }
+
+        String[] restaurant_info = EditingRestaurant.getInfo();
+        reviews_label.setText("Recensioni ricevute: " + restaurant_info[10]);
+        String stars_text = restaurant_info[9];
+        stars_label.setText("Valutazione media (stelle): " + (stars_text.equals("0") ? "-" : stars_text));
 
         Communicator.sendStream("getReviewsPages");
         Communicator.sendStream(Integer.toString(EditingRestaurant.getId()));

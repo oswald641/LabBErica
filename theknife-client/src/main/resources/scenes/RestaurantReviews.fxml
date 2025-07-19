@@ -12,7 +12,9 @@
       <Button fx:id="prev_btn" layoutX="50.0" layoutY="310.0" mnemonicParsing="false" onAction="#prevPage" text="←" />
       <Button fx:id="next_btn" layoutX="77.0" layoutY="310.0" mnemonicParsing="false" onAction="#nextPage" text="→" />
       <Label fx:id="page_label" layoutX="104.0" layoutY="314.0" text="-/-" />
-      <Button fx:id="add_review_btn" contentDisplay="CENTER" layoutX="300.0" layoutY="310.0" mnemonicParsing="false" onAction="#addReview" text="Aggiungi recensione" visible="false" />
+      <Button fx:id="add_review_btn" contentDisplay="CENTER" layoutX="50.0" layoutY="345.0" mnemonicParsing="false" onAction="#addReview" text="Aggiungi recensione" visible="false" />
       <Label fx:id="no_reviews_label" alignment="CENTER" layoutX="50.0" layoutY="167.0" prefHeight="17.0" prefWidth="500.0" text="Non ci sono recensioni per questo ristorante" />
+      <Label fx:id="reviews_label" layoutX="300.0" layoutY="314.0" text="Recensioni riceveute: -" />
+      <Label fx:id="stars_label" layoutX="300.0" layoutY="335.0" text="Valutazione media (stelle): -" />
    </children>
 </AnchorPane>
