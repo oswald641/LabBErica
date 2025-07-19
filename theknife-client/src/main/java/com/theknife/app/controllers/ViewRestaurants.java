@@ -70,9 +70,10 @@ public class ViewRestaurants {
         stars_min = filledOrDash(stars_min_field.getText());
         stars_max = filledOrDash(stars_max_field.getText());
         only_favourites = favourites_check.isSelected() ? "y" : "n";
-        category = filledOrDash(category_field.getText());
-        if(category.equals(""))
+        if(category_field.getText().isEmpty())
             category = null;
+        else
+            category = filledOrDash(category_field.getText());
         near_me = near_me_check.isSelected() ? "y" : "n";
         searchPage(0);
     }
