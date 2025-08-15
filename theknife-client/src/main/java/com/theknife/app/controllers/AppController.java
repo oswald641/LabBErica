@@ -81,6 +81,7 @@ public class AppController {
 
     @FXML
     private void reconnect() throws UnknownHostException, IOException {
+        //used to handle the reconnection messages
         if(Communicator.connect()) {
             reconnection_tries = 1;
             notification_label.setVisible(true);

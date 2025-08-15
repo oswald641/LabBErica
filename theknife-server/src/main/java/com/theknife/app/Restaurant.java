@@ -3,6 +3,7 @@ package com.theknife.app;
 import java.sql.SQLException;
 
 public class Restaurant {
+    //function used to get restaurants info using filters
     public static String[][] getRestaurantsWithFilter(int page, String latitude_string, String longitude_string, String range_km_string, String price_min_string, String price_max_string, boolean has_delivery, boolean has_online, String stars_min_string, String stars_max_string, int favourite_id, String category, int near_who) throws SQLException {
         double latitude, longitude, range_km;
         if(latitude_string.equals("-") && longitude_string.equals("-"))

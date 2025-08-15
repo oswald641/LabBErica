@@ -59,6 +59,7 @@ public class ViewRestaurants {
 
     @FXML
     private void updateFilters() throws IOException {
+        //updates the filters to be used in the search
         hideNotification();
         latitude = filledOrDash(latitude_field.getText());
         longitude = filledOrDash(longitude_field.getText());
@@ -78,6 +79,7 @@ public class ViewRestaurants {
         searchPage(0);
     }
 
+    //function used to update the displayed restaurants in the listview
     private void searchPage(int page) throws IOException {
         current_page = page;
         no_restaurants_label.setVisible(false);
@@ -153,6 +155,7 @@ public class ViewRestaurants {
 
     @FXML
     private void handleCoordinates() {
+        //enables/disables the coordinates input box based on the "near me" check box value
         latitude_field.setDisable(near_me_check.isSelected());
         longitude_field.setDisable(near_me_check.isSelected());
     }

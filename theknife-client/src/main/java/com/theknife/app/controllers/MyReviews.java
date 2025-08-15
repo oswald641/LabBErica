@@ -35,6 +35,7 @@ public class MyReviews {
         }
 
         //https://stackoverflow.com/questions/53493111/javafx-wrapping-text-in-listview
+        //function used to wrap the text for every cell of the listview
         reviews_listview.setCellFactory(lv -> new ListCell<String>() {
             {
                 setPrefWidth(0); // forces the cell to size itself based on the ListView
@@ -60,6 +61,7 @@ public class MyReviews {
         SceneManager.changeScene("App");
     }
 
+    //function used to change the page of the reviews
     private void changePage(int page) throws IOException {
         pages_label.setText(Integer.toString(page + 1) + "/" + Integer.toString(total_pages));
         prev_btn.setDisable(page < 1);

@@ -16,6 +16,7 @@ import java.util.List;
 public class DBHandler {
     private static Connection connection = null;
 
+    //handles the connection to the database
     public static boolean connect(String jdbcUrl, String username, String password) {
         try {
             Class.forName("org.postgresql.Driver");
@@ -236,6 +237,7 @@ public class DBHandler {
         return null;
     }
 
+    //checks if user is owner of a restaurant
     public static boolean hasAccess(int user_id, int restaurant_id) throws SQLException {
         String sql = "SELECT 1 FROM \"RistorantiTheKnife\" r JOIN utenti u ON proprietario = u.id WHERE r.id = ? AND u.id = ?";
 
@@ -295,6 +297,7 @@ public class DBHandler {
         return true;
     }
 
+    //function used to set variable length and type parameters in a prepared statement
     private static void setParameters(PreparedStatement statement, List<String> parameters, List<String> parameters_types) throws NumberFormatException, SQLException {
         for(int i = 0; i < parameters.size(); i++) {
             switch(parameters_types.get(i)) {
@@ -577,6 +580,7 @@ public class DBHandler {
         return reviews.toArray(new String[][]{});
     }
 
+    //checks if the restaurator is owner of the reviewd restaurant
     public static boolean canRespond(int user_id, int review_id) throws SQLException {
         String sql = "SELECT 1 FROM recensioni re JOIN \"RistorantiTheKnife\" ri ON id_ristorante = ri.id WHERE re.id = ? AND proprietario = ?";
 

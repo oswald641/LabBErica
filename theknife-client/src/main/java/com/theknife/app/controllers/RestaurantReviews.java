@@ -69,6 +69,7 @@ public class RestaurantReviews {
             no_reviews_label.setVisible(true);
 
         //https://stackoverflow.com/questions/53493111/javafx-wrapping-text-in-listview
+        //function used to wrap the text for every cell of the listview
         reviews_listview.setCellFactory(lv -> new ListCell<String>() {
             {
                 setPrefWidth(0); // forces the cell to size itself based on the ListView
@@ -89,6 +90,7 @@ public class RestaurantReviews {
         });
     }
 
+    //changes the page of the current restaurant reviews
     private void changePage(int page) throws IOException {
         page_label.setText(Integer.toString(page + 1) + '/' + total_pages);
         prev_btn.setDisable(page < 1);
@@ -136,6 +138,7 @@ public class RestaurantReviews {
     @FXML
     private void addReview() throws IOException {
         if(is_restaurateur) {
+            //sets the id of the review to reply to (restaurator)
             int review_id = Integer.parseInt(reviews_ids[reviews_listview.getSelectionModel().getSelectedIndex()]);
             EditingRestaurant.setReviewId(review_id);
         }
@@ -149,6 +152,7 @@ public class RestaurantReviews {
 
     @FXML
     private void goBack() throws IOException {
+        //changes page based on the role
         if(is_restaurateur)
             SceneManager.changeScene("MyRestaurants");
         else
